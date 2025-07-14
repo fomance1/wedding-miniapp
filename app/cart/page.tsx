@@ -10,9 +10,6 @@ interface Product {
   isFavorite: boolean;
 }
 
-const BOT_TOKEN = "7913144901:AAGET711u81ptlSRH6OfcFipVjWkz5tp90k";
-const ADMIN_ID = "7920554819";
-
 export default function CartPage() {
   const [cart, setCart] = useState<Product[]>([]);
   const [success, setSuccess] = useState(false);
@@ -25,26 +22,14 @@ export default function CartPage() {
 
   const total = cart.reduce((sum, p) => sum + p.price, 0);
 
-  // Отправка заказа в Telegram
+  // Отправка заказа через серверную функцию
   const sendOrder = async () => {
     setLoading(true);
-    const orderText =
-      `Новый заказ!\n\n` +
-      cart.map((item, idx) => `${idx + 1}. ${item.name} — ${item.price} ₽`).join("\n") +
-      `\n\nИтого: ${total} ₽`;
-
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-    const body = {
-      chat_id: ADMIN_ID,
-      text: orderText,
-      parse_mode: "HTML"
-    };
-
     try {
-      const res = await fetch(url, {
+      const res = await fetch("/api/sendOrder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+        body: JSON.stringify({ cart, total })
       });
       if (res.ok) {
         setSuccess(true);
