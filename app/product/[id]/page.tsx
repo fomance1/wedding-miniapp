@@ -31,9 +31,6 @@ export default function ProductPage() {
     if (!cart.find((item: Product) => item.id === product.id)) {
       cart.push(product);
       localStorage.setItem("cart", JSON.stringify(cart));
-      alert("Товар добавлен в корзину!");
-    } else {
-      alert("Товар уже в корзине!");
     }
   };
 
@@ -43,9 +40,6 @@ export default function ProductPage() {
     if (!fav.find((item: Product) => item.id === product.id)) {
       fav.push(product);
       localStorage.setItem("favorites", JSON.stringify(fav));
-      alert("Товар добавлен в избранное!");
-    } else {
-      alert("Товар уже в избранном!");
     }
   };
 
@@ -54,26 +48,32 @@ export default function ProductPage() {
   }
 
   return (
-    <div style={{ padding: 20, maxWidth: 500, margin: "0 auto" }}>
-      {/* Навигация */}
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: 16, marginBottom: 24 }}>
-        <button onClick={() => router.push("/favorites")} style={{ padding: 8, borderRadius: 6, background: "#fff0fa", border: "1px solid #f7c5d8", cursor: "pointer" }}>Избранное</button>
-        <button onClick={() => router.push("/cart")} style={{ padding: 8, borderRadius: 6, background: "#fff0fa", border: "1px solid #f7c5d8", cursor: "pointer" }}>Корзина</button>
-      </div>
+    <div style={{ padding: 24, maxWidth: 500, margin: "0 auto", background: "#fff", borderRadius: 20, boxShadow: "0 2px 12px rgba(247,197,216,0.10)", marginTop: 32 }}>
       <img
         src={product.image}
         alt={product.name}
-        style={{ width: "100%", borderRadius: 12, marginBottom: 16, minHeight: 200, objectFit: "cover" }}
+        style={{ width: "100%", borderRadius: 16, marginBottom: 18, minHeight: 200, objectFit: "cover" }}
       />
-      <h1 style={{ marginBottom: 12 }}>{product.name}</h1>
-      <p style={{ fontWeight: 500, fontSize: 20, marginBottom: 12 }}>{product.price} ₽</p>
-      <p style={{ marginBottom: 24 }}>{product.description}</p>
-      <button style={{ width: "100%", padding: 12, borderRadius: 8, background: "#f7c5d8", border: "none", fontWeight: 600, fontSize: 18, cursor: "pointer", marginBottom: 10 }} onClick={() => addToCart(product)}>
-        Добавить в корзину
-      </button>
-      <button style={{ width: "100%", padding: 12, borderRadius: 8, background: "#ffe0f0", border: "none", fontWeight: 500, fontSize: 16, cursor: "pointer" }} onClick={() => addToFavorites(product)}>
-        В избранное
-      </button>
+      <h1 style={{ marginBottom: 10, color: "#b85c8c", fontSize: 24, fontWeight: 700 }}>{product.name}</h1>
+      <p style={{ fontWeight: 500, fontSize: 20, marginBottom: 12, color: "#7a3e5c" }}>{product.price} ₽</p>
+      <p style={{ marginBottom: 24, color: "#7a3e5c", fontSize: 15 }}>{product.description}</p>
+      <div style={{ display: "flex", gap: 16, marginBottom: 18 }}>
+        <button
+          style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+          title="В избранное"
+          onClick={() => addToFavorites(product)}
+        >
+          <svg width="28" height="28"><use xlinkHref="#favorite" /></svg>
+        </button>
+        <button
+          style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+          title="В корзину"
+          onClick={() => addToCart(product)}
+        >
+          <svg width="28" height="28"><use xlinkHref="#cart" /></svg>
+        </button>
+      </div>
+      <button style={{ width: "100%", padding: 14, borderRadius: 12, background: "#b85c8c", border: "none", fontWeight: 600, fontSize: 17, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px #f7c5d8" }} onClick={() => router.push("/cart")}>Перейти в корзину</button>
     </div>
   );
 } 

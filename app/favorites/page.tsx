@@ -19,16 +19,19 @@ export default function FavoritesPage() {
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1 style={{ marginBottom: 24 }}>Избранное</h1>
+    <div style={{ maxWidth: 600, margin: "32px auto 0 auto", background: "#fff", borderRadius: 20, boxShadow: "0 2px 12px rgba(247,197,216,0.10)", padding: 24 }}>
+      <h1 style={{ marginBottom: 24, color: "#b85c8c", fontSize: 22, fontWeight: 700 }}>Избранное</h1>
       {favorites.length === 0 ? (
-        <p>В избранном пока ничего нет.</p>
+        <p style={{ color: "#7a3e5c" }}>В избранном пока ничего нет.</p>
       ) : (
-        <ul>
+        <ul style={{ padding: 0, listStyle: "none" }}>
           {favorites.map((item) => (
-            <li key={item.id} style={{ marginBottom: 12 }}>
-              <img src={item.image} alt={item.name} style={{ width: 60, height: 60, objectFit: "cover", borderRadius: 8, marginRight: 12, verticalAlign: "middle" }} />
-              <span style={{ fontWeight: 500 }}>{item.name}</span> — {item.price} ₽
+            <li key={item.id} style={{ marginBottom: 18, display: "flex", alignItems: "center", background: "#f8f6fa", borderRadius: 14, padding: 10 }}>
+              <img src={item.image} alt={item.name} style={{ width: 60, height: 60, objectFit: "cover", borderRadius: 10, marginRight: 16 }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, color: "#b85c8c" }}>{item.name}</div>
+                <div style={{ color: "#7a3e5c" }}>{item.price} ₽</div>
+              </div>
             </li>
           ))}
         </ul>
